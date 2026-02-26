@@ -45,9 +45,11 @@ export class Gameboard {
     }
 
     receiveAttack(r, c) {  //deals with tracking grid
-        if(!this.isValidPos(r,c)) throw new Error('cannot hit out of grid')
-        if (this.primaryGrid[r][c] !== null 
-            && this.trackingGrid[r][c]===null) {
+        if(!this.isValidPos(r,c)) throw new Error('cannot hit out of grid');
+
+        if(this.trackingGrid[r][c] !== null) throw new Error("duplicate attack");
+
+        if (this.primaryGrid[r][c] !== null ) {
             const ship = this.primaryGrid[r][c];
             ship.hit();
             this.trackingGrid[r][c] = 'hit';

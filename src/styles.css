@@ -23,14 +23,22 @@ main{
   gap: 2px;
 }
 
-.water{
+.cell{
   height: 2em;
   width: 2em;
   background-color: azure;
 }
 
-.water.ship{
-  background-color: chartreuse;
+.cell.ship{
+  background-color: navy;
+}
+
+.cell.hit{
+  background-color: red;
+}
+
+.cell.miss{
+  background-color: gray;
 }
 
 
