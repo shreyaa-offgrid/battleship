@@ -19,7 +19,6 @@ export class Player {
         if(enemy.gameboard.allShipsSunk()) throw new Error('no ship afloat to attack')
 
         let r, c;
-
         do {
             r = Math.floor(Math.random() * 10);
             c = Math.floor(Math.random() * 10);

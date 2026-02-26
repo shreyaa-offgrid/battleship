@@ -1,4 +1,3 @@
-import { Ship } from "./ship.js";
 export class Gameboard {
     constructor() {
         const primaryGrid = []; //for placing ships
@@ -10,7 +9,6 @@ export class Gameboard {
                 primaryGrid[i].push(null);
                 trackingGrid[i].push(null);
             }
-
         }
         this.primaryGrid = primaryGrid;
         this.trackingGrid = trackingGrid;
@@ -23,7 +21,8 @@ export class Gameboard {
         return false;
     }
 
-    placeShip(ship, r, c, align) {
+    placeShip(ship, r, c) { //deals with primary ship
+        const align = ship.align;
         const length = ship.length;
         if (!this.isValidPos(r, c)) throw new Error('cannot place ship here');
         if (align === 'horizontal') {
@@ -45,7 +44,7 @@ export class Gameboard {
         this.fleet.add(ship);
     }
 
-    receiveAttack(r, c) {
+    receiveAttack(r, c) {  //deals with tracking grid
         if(!this.isValidPos(r,c)) throw new Error('cannot hit out of grid')
         if (this.primaryGrid[r][c] !== null 
             && this.trackingGrid[r][c]===null) {

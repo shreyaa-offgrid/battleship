@@ -21,7 +21,16 @@ main{
   grid-template-columns: repeat(10,1fr);
   grid-template-rows: repeat(10,1fr);
   gap: 2px;
-  
+}
+
+.water{
+  height: 2em;
+  width: 2em;
+  background-color: azure;
+}
+
+.water.ship{
+  background-color: chartreuse;
 }
 
 

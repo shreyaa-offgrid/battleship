@@ -55,9 +55,9 @@ describe("Gameboard", () => {
 describe("Ship placement", () => {
     it("places a ship horizontally on the board", () => {
         const board = new Gameboard();
-        const ship = new Ship(3);
+        const ship = new Ship(3,'xyz','horizontal');
 
-        board.placeShip(ship, 2, 2, "horizontal");
+        board.placeShip(ship, 2, 2);
 
         expect(board.primaryGrid[2][2]).toBe(ship);
         expect(board.primaryGrid[2][3]).toBe(ship);
@@ -66,9 +66,9 @@ describe("Ship placement", () => {
 
     it("places a ship vertically on the board", () => {
         const board = new Gameboard();
-        const ship = new Ship(4);
+        const ship = new Ship(4,'xyz','vertical');
 
-        board.placeShip(ship, 1, 5, "vertical");
+        board.placeShip(ship, 1, 5);
 
         expect(board.primaryGrid[1][5]).toBe(ship);
         expect(board.primaryGrid[2][5]).toBe(ship);
@@ -78,22 +78,22 @@ describe("Ship placement", () => {
 
     it("throws an error when placing ship out of bounds", () => {
         const board = new Gameboard();
-        const ship = new Ship(4);
+        const ship = new Ship(4,'xyz','horizontal');
 
         expect(() => {
-            board.placeShip(ship, 9, 8, "horizontal");
+            board.placeShip(ship, 9, 8);
         }).toThrow();
     });
 
     it("does not allow ships to overlap", () => {
         const board = new Gameboard();
-        const ship1 = new Ship(3);
-        const ship2 = new Ship(2);
+        const ship1 = new Ship(3,'xyz','horizontal');
+        const ship2 = new Ship(2,'abc','vertical');
 
-        board.placeShip(ship1, 0, 0, "horizontal");
+        board.placeShip(ship1, 0, 0);
 
         expect(() => {
-            board.placeShip(ship2, 0, 1, "vertical");
+            board.placeShip(ship2, 0, 1);
         }).toThrow();
     });
 
@@ -102,9 +102,9 @@ describe("Ship placement", () => {
 describe("receiveAttack", () => {
     it("calls hit() when attacking a ship", () => {
         const board = new Gameboard();
-        const ship = new Ship(2);
+        const ship = new Ship(2,'xyz','horizontal');
 
-        board.placeShip(ship, 0, 0, "horizontal");
+        board.placeShip(ship, 0, 0);
         board.receiveAttack(0, 0);
 
         expect(ship.hits).toBe(1);
@@ -120,9 +120,9 @@ describe("receiveAttack", () => {
 
     it("does not allow attacking the same coordinate twice", () => {
         const board = new Gameboard();
-        const ship = new Ship(2);
+        const ship = new Ship(2,'xyz','horizontal');
 
-        board.placeShip(ship, 0, 0, "horizontal");
+        board.placeShip(ship, 0, 0);
 
         board.receiveAttack(0, 0);
         board.receiveAttack(0, 0);
