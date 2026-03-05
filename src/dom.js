@@ -18,7 +18,7 @@ export function createGrid(container) {
     }
 }
 
-export function renderBoard(gameboard, container, hideships = false){
+export function renderBoard(gameboard, container, hideShips = false){
     container.innerHTML = "";
 
     for(let r = 0;r<10;r++){
@@ -35,7 +35,7 @@ export function renderBoard(gameboard, container, hideships = false){
             }
             else if(tracking === 'miss'){
                 cell.classList.add('miss');
-            } else if(primary!=null && !hideships){
+            } else if(primary!==null && !hideShips){
                 cell.classList.add('ship');
             }
             container.appendChild(cell);

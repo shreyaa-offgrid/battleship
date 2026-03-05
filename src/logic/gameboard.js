@@ -27,15 +27,15 @@ export class Gameboard {
         if (!this.isValidPos(r, c)) throw new Error('cannot place ship here');
         if (align === 'horizontal') {
             for (let i = 0; i < length; i++) {
-                if(!this.isValidPos(r,c+i) || this.primaryGrid[r][c+i] !== null) throw new Error('cannot place ship here');
+                if (!this.isValidPos(r, c + i) || this.primaryGrid[r][c + i] !== null) throw new Error('cannot place ship here');
             }
             for (let i = 0; i < length; i++) {
                 this.primaryGrid[r][c + i] = ship;
             }
         }
-        else{ //vertical
+        else { //vertical
             for (let i = 0; i < length; i++) {
-                if(!this.isValidPos(r+i,c) || this.primaryGrid[r+i][c] !== null) throw new Error('cannot place ship here');
+                if (!this.isValidPos(r + i, c) || this.primaryGrid[r + i][c] !== null) throw new Error('cannot place ship here');
             }
             for (let i = 0; i < length; i++) {
                 this.primaryGrid[r + i][c] = ship;
@@ -44,24 +44,47 @@ export class Gameboard {
         this.fleet.add(ship);
     }
 
-    receiveAttack(r, c) {  //deals with tracking grid
-        if(!this.isValidPos(r,c)) throw new Error('cannot hit out of grid');
+    receiveAttack(r, c) {  //deals with tracking grid, receives attacks from human
+        if (!this.isValidPos(r, c)) return false;
 
-        if(this.trackingGrid[r][c] !== null) throw new Error("duplicate attack");
+        if (this.trackingGrid[r][c] !== null) return false;
 
-        if (this.primaryGrid[r][c] !== null ) {
+        if (this.primaryGrid[r][c] !== null) {
             const ship = this.primaryGrid[r][c];
             ship.hit();
             this.trackingGrid[r][c] = 'hit';
-            if(ship.isSunk()){
+            if (ship.isSunk()) {
                 this.fleet.delete(ship);
-            } 
+            }
         } else {
             this.trackingGrid[r][c] = 'miss';
         }
+        return true;
     }
 
-    allShipsSunk(){
-        return this.fleet.size===0;
+    attackHuman() {
+        let r = Math.floor(Math.random() * 10);
+        let c = Math.floor(Math.random() * 10);
+
+        while (this.trackingGrid[r][c]!==null) {
+            r = Math.floor(Math.random() * 10);
+            c = Math.floor(Math.random() * 10);
+        }
+
+        if (this.primaryGrid[r][c] !== null) {
+            const ship = this.primaryGrid[r][c];
+            ship.hit();
+            this.trackingGrid[r][c] = 'hit';
+            if (ship.isSunk()) {
+                this.fleet.delete(ship);
+            }
+        } else {
+            this.trackingGrid[r][c] = 'miss';
+        }
+        return {r,c};
+    }
+
+    allShipsSunk() {
+        return this.fleet.size === 0;
     }
 }
