@@ -73,11 +73,8 @@ export function showPreviewCells(grid, cells, valid) {
     });
 }
 
-export function markPlacedShip() {
-
-}
-export function disableShipIcon() {
-
+export function disableElement(el) {
+    el.classList.add('disabled');
 }
 
 export const shipImages = document.querySelectorAll('dialog img');

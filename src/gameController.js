@@ -1,3 +1,4 @@
+import { beginBattleBtn, disableElement, shipImages } from "./dom.js";
 import { Player } from "./logic/player.js";
 import { Ship } from "./logic/ship.js";
 
@@ -53,6 +54,16 @@ export function getSelectedShip() {
     return selectedShip;
 }
 
+export function unselectShip(){
+
+    let type = selectedShip.type;
+    shipImages.forEach(ship=>{
+        ship.classList.remove('selected');
+        if(ship.parentNode.classList.contains(type)) disableElement(ship);
+    });
+    selectedShip = null;
+}
+
 export function getOrientation() {
     return currentOrientation;
 }
@@ -85,14 +96,30 @@ export function getPreviewCells(row, col, length, orientation) {
     return cells;
 }
 
-export function resetPlacement() {
+export function resetPlacement(){
 
+    selectedShip = null;
+    shipsRemaining = shipsToPlace.length;
+    currentOrientation = "horizontal";
+    shipImages.forEach(ship=>{
+        ship.classList.remove('disabled');
+        ship.classList.remove('selected');
+    })
+}
+
+export function shipPlaced(){
+    shipsRemaining--;
+}
+
+export function getShipsRemaining(){
+    return shipsRemaining;
 }
 
 export function newGame() {
     currentTurn = "human";
     gameOver = false;
     setupPhase = true;
+    disableElement(beginBattleBtn);
 
     const humanPlayer = new Player('human');
     const computerPlayer = new Player('computer');
@@ -109,5 +136,4 @@ export function newGame() {
     });
     return { humanPlayer, computerPlayer };
 }
-//new game should reset placement and open set up phase
-//rotation doesnt immediately change preview
+
