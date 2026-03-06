@@ -4,7 +4,7 @@ import {
     setGameOver, resetPlacement, finishSetup, selectShip,
     isSetupPhase, rotateShip, getSelectedShip, getOrientation,
     isPlacementValid, getPreviewCells, unselectShip,
-    shipPlaced, getShipsRemaining
+    shipPlaced, getShipsRemaining, computerAttack
 } from "./gameController.js";
 import {
     beginBattleBtn, highlightShipSelection, newGameBtn,
@@ -57,7 +57,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (getCurrentTurn() !== "computer") return;
         if (isSetupPhase()) return;
 
-        humanPlayer.gameboard.attackHuman();
+        computerAttack(humanPlayer.gameboard);
         renderBoard(humanPlayer.gameboard, playerGrid);
 
         if (humanPlayer.gameboard.allShipsSunk()) {

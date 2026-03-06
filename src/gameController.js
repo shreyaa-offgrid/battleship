@@ -10,6 +10,8 @@ let selectedShip = null;
 let currentOrientation = 'horizontal';
 let shipsRemaining = 5;
 
+let targetQueue = [];
+
 export function switchTurn() {
     currentTurn = currentTurn === 'human' ? 'computer' : 'human';
 }
@@ -54,12 +56,12 @@ export function getSelectedShip() {
     return selectedShip;
 }
 
-export function unselectShip(){
+export function unselectShip() {
 
     let type = selectedShip.type;
-    shipImages.forEach(ship=>{
+    shipImages.forEach(ship => {
         ship.classList.remove('selected');
-        if(ship.parentNode.classList.contains(type)) disableElement(ship);
+        if (ship.parentNode.classList.contains(type)) disableElement(ship);
     });
     selectedShip = null;
 }
@@ -96,23 +98,72 @@ export function getPreviewCells(row, col, length, orientation) {
     return cells;
 }
 
-export function resetPlacement(){
+export function resetPlacement() {
 
     selectedShip = null;
     shipsRemaining = shipsToPlace.length;
     currentOrientation = "horizontal";
-    shipImages.forEach(ship=>{
+    shipImages.forEach(ship => {
         ship.classList.remove('disabled');
         ship.classList.remove('selected');
     })
 }
 
-export function shipPlaced(){
+export function shipPlaced() {
     shipsRemaining--;
 }
 
-export function getShipsRemaining(){
+export function getShipsRemaining() {
     return shipsRemaining;
+}
+
+function getNeighbors(r, c) {
+    return [
+        { r: r - 1, c },
+        { r: r + 1, c },
+        { r, c: c - 1 },
+        { r, c: c + 1 }
+    ];
+}
+
+export function computerAttack(gameboard) {
+
+    let r, c;
+
+    if (targetQueue.length > 0) {
+        const target = targetQueue.shift();
+        r = target.r;
+        c = target.c;
+    } else {
+        do {
+            r = Math.floor(Math.random() * 10);
+            c = Math.floor(Math.random() * 10);
+        } while ((r + c) % 2 !== 0);
+    }
+
+    const result = gameboard.receiveAttack(r, c);
+
+    if (!result) {
+        return computerAttack(gameboard);
+    }
+
+    if (gameboard.primaryGrid[r][c] !== null) {
+
+        const neighbors = getNeighbors(r, c);
+
+        neighbors.forEach(n => {
+            if (
+                n.r >= 0 &&
+                n.r < 10 &&
+                n.c >= 0 &&
+                n.c < 10 &&
+                gameboard.trackingGrid[n.r][n.c] === null &&
+                !targetQueue.some(t => t.r === n.r && t.c === n.c)
+            ) {
+                targetQueue.push(n);
+            }
+        });
+    }
 }
 
 export function newGame() {
@@ -120,6 +171,7 @@ export function newGame() {
     gameOver = false;
     setupPhase = true;
     disableElement(beginBattleBtn);
+    targetQueue = [];
 
     const humanPlayer = new Player('human');
     const computerPlayer = new Player('computer');

@@ -63,28 +63,6 @@ export class Gameboard {
         return true;
     }
 
-    attackHuman() {
-        let r = Math.floor(Math.random() * 10);
-        let c = Math.floor(Math.random() * 10);
-
-        while (this.trackingGrid[r][c]!==null) {
-            r = Math.floor(Math.random() * 10);
-            c = Math.floor(Math.random() * 10);
-        }
-
-        if (this.primaryGrid[r][c] !== null) {
-            const ship = this.primaryGrid[r][c];
-            ship.hit();
-            this.trackingGrid[r][c] = 'hit';
-            if (ship.isSunk()) {
-                this.fleet.delete(ship);
-            }
-        } else {
-            this.trackingGrid[r][c] = 'miss';
-        }
-        return {r,c};
-    }
-
     allShipsSunk() {
         return this.fleet.size === 0;
     }
