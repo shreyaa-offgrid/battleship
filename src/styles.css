@@ -1,6 +1,19 @@
 @font-face {
   font-family: Roboto;
-  src: url("./fonts/Roboto-Regular.woff2"), url("./fonts/Roboto-Regular.woff");
+  src: url("./fonts/Roboto-Regular.woff2"),
+    url("./fonts/Roboto-Regular.woff");
+}
+
+@font-face {
+  font-family: Bungee;
+  src: url("./fonts/Bungee-Regular.woff2"),
+    url("./fonts/Bungee-Regular.woff");
+}
+
+@font-face {
+  font-family: Michroma;
+  src: url("./fonts/Michroma-Regular.woff2"),
+    url("./fonts/Michroma-Regular.woff");
 }
 
 * {
@@ -8,37 +21,180 @@
   padding: 0;
   box-sizing: border-box;
   font-family: Roboto;
+  /* border: 1px red dotted; */
 }
 
-main{
+body {
+  background-image: url('./images/background-transparent.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 100vh;
+}
+
+h1 {
+  text-align: center;
+  padding: 0.2em;
+  font-family: Bungee;
+  font-size: 3em;
+}
+
+.boards {
   display: flex;
   align-items: center;
   justify-content: space-around;
 }
 
-.ocean-grid{
+.boards p {
+  text-align: center;
+  padding: 0.3em;
+  font-family: Michroma;
+  font-weight: bold;
+}
+
+.grid-container {
+  padding: 0.5em;
+  border: 1px green solid;
+  border-radius: 0.5em;
+}
+
+.ocean-grid {
   display: grid;
-  grid-template-columns: repeat(10,1fr);
-  grid-template-rows: repeat(10,1fr);
+  grid-template-columns: repeat(10, 1fr);
+  grid-template-rows: repeat(10, 1fr);
   gap: 2px;
 }
 
-.cell{
+.cell {
   height: 2em;
   width: 2em;
   background-color: azure;
 }
 
-.cell.ship{
+.cell.ship {
   background-color: navy;
 }
 
-.cell.hit{
+.cell.hit {
   background-color: red;
 }
 
-.cell.miss{
+.cell.miss {
   background-color: gray;
 }
 
+.btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 2em;
+}
 
+.btn button:hover, dialog button:hover {
+  transform: scale(1.02);
+}
+
+.btn button:active, dialog button:active{
+  background-color: darkgreen;
+}
+
+.btn button, dialog button {
+  font-family: Michroma;
+  text-align: center;
+  padding: 0.5em;
+  border: none;
+  background-color: green;
+  color: white;
+  border-radius: 0.5em;
+  cursor: pointer;
+  font-size: 1em;
+}
+
+footer {
+  position: absolute;
+  bottom: 0;
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding: 0.3em;
+  background-color: azure;
+}
+
+footer a {
+  color: green;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+dialog{
+  position: absolute;
+  top: 5em;
+  right: 2em;
+  left: auto;
+  width: 40vw;
+  height: 80vh;
+  padding: 1.5em;
+  border: none;
+  border-radius: 1em;
+  background-color: azure;
+}
+
+dialog .flex-container{
+  display: flex;
+  flex-direction: column;
+  gap: 0.3em;
+}
+
+dialog *{
+  font-family: Michroma;
+}
+
+dialog button{
+  width: 20vw;
+}
+
+dialog .ship{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+dialog img{
+  height: 3.5em;
+  border: 1px green dashed;
+  border-radius: 1em;
+  cursor: pointer;
+}
+
+dialog img:hover{
+  transform: scale(1.02);
+}
+
+dialog .carrier>img{
+  width: 12.5em;
+}
+
+dialog .battleship>img{
+  width: 10em;
+}
+
+dialog .submarine>img, dialog .destroyer>img{
+  width: 7.5em;
+}
+
+dialog .patrol>img{
+  width: 5em;
+}
+
+dialog .btns{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1em;
+  margin-top: 1em;
+}
+
+dialog p{
+  margin-top: 2em;
+}

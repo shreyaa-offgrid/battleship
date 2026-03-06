@@ -43,5 +43,7 @@ export function renderBoard(gameboard, container, hideShips = false){
     }
 }
 
+export let gameFlowBtn = document.querySelector(".btn button");
+export let placeShipDialog = document.querySelector("dialog");
 
 

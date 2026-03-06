@@ -1,6 +1,6 @@
 import "./styles.css";
 import { newGame, getCurrentTurn, switchTurn, isGameOver, setGameOver } from "./gameController.js";
-import { renderBoard } from "./dom.js";
+import { gameFlowBtn, placeShipDialog, renderBoard } from "./dom.js";
 
 document.addEventListener("DOMContentLoaded", () => {
     const { humanPlayer, computerPlayer } = newGame();
@@ -60,6 +60,10 @@ document.addEventListener("DOMContentLoaded", () => {
         handlePlayerAttack(row, col);
     });
 
+    gameFlowBtn.addEventListener('click',()=>{
+        placeShipDialog.showModal();
+        gameFlowBtn.style.display = 'none'; 
+    })
 });
 
 
