@@ -24,10 +24,10 @@ export class Gameboard {
     placeShip(ship, r, c) { //deals with primary ship
         const align = ship.align;
         const length = ship.length;
-        if (!this.isValidPos(r, c)) throw new Error('cannot place ship here');
+        if (!this.isValidPos(r, c)) return false;
         if (align === 'horizontal') {
             for (let i = 0; i < length; i++) {
-                if (!this.isValidPos(r, c + i) || this.primaryGrid[r][c + i] !== null) throw new Error('cannot place ship here');
+                if (!this.isValidPos(r, c + i) || this.primaryGrid[r][c + i] !== null) return false;
             }
             for (let i = 0; i < length; i++) {
                 this.primaryGrid[r][c + i] = ship;
@@ -35,13 +35,14 @@ export class Gameboard {
         }
         else { //vertical
             for (let i = 0; i < length; i++) {
-                if (!this.isValidPos(r + i, c) || this.primaryGrid[r + i][c] !== null) throw new Error('cannot place ship here');
+                if (!this.isValidPos(r + i, c) || this.primaryGrid[r + i][c] !== null) return false;
             }
             for (let i = 0; i < length; i++) {
                 this.primaryGrid[r + i][c] = ship;
             }
         }
         this.fleet.add(ship);
+        return true;
     }
 
     receiveAttack(r, c) {  //deals with tracking grid, receives attacks from human

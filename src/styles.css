@@ -21,7 +21,6 @@
   padding: 0;
   box-sizing: border-box;
   font-family: Roboto;
-  /* border: 1px red dotted; */
 }
 
 body {
@@ -66,8 +65,8 @@ h1 {
 }
 
 .cell {
-  height: 2em;
-  width: 2em;
+  height: 2.1em;
+  width: 2.1em;
   background-color: azure;
 }
 
@@ -183,7 +182,7 @@ dialog .submarine>img, dialog .destroyer>img{
   width: 7.5em;
 }
 
-dialog .patrol>img{
+dialog .patrol-boat>img{
   width: 5em;
 }
 
@@ -197,4 +196,17 @@ dialog .btns{
 
 dialog p{
   margin-top: 2em;
+}
+
+dialog img.selected{
+  border: 2px darkgreen solid;
+  background-color: white;
+}
+
+.preview-valid {
+    background: rgba(0, 255, 0, 0.35);
+}
+
+.preview-invalid {
+    background: rgba(255, 0, 0, 0.35);
 }

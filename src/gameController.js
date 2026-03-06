@@ -3,7 +3,11 @@ import { Ship } from "./logic/ship.js";
 
 let currentTurn = 'human'; //or computer
 let gameOver = false;
-let setUpPhase = true;
+let setupPhase = true;
+
+let selectedShip = null;
+let currentOrientation = 'horizontal';
+let shipsRemaining = 5;
 
 export function switchTurn() {
     currentTurn = currentTurn === 'human' ? 'computer' : 'human';
@@ -21,6 +25,12 @@ export function setGameOver() {
     gameOver = true;
 }
 
+export const shipsToPlace = [{ len: 5, type: 'carrier' },
+{ len: 4, type: 'battleship' },
+{ len: 3, type: 'submarine' },
+{ len: 3, type: 'destroyer' },
+{ len: 2, type: 'patrol-boat' }];
+
 export function isSetupPhase() {
     return setupPhase;
 }
@@ -29,17 +39,60 @@ export function finishSetup() {
     setupPhase = false;
 }
 
-export const shipsToPlace = [{ len: 5, type: 'carrier' },
-{ len: 4, type: 'battleship' },
-{ len: 3, type: 'submarine' },
-{ len: 3, type: 'destroyer' },
-{ len: 2, type: 'patrol-boat' }];
+export function selectShip(ship) {
+    let typeClass = ship.parentNode.classList[1];
+    let idx = shipsToPlace.findIndex((s) => s.type === typeClass);
+    selectedShip = shipsToPlace[idx];
+}
+
+export function rotateShip() {
+    currentOrientation = currentOrientation === 'horizontal' ? 'vertical' : 'horizontal';
+}
+
+export function getSelectedShip() {
+    return selectedShip;
+}
+
+export function getOrientation() {
+    return currentOrientation;
+}
+
+export function isPlacementValid(gameboard, cells) {
+
+    for (const { r, c } of cells) {
+
+        if (r < 0 || r >= 10 || c < 0 || c >= 10)
+            return false;
+
+        if (gameboard.primaryGrid[r][c] !== null)
+            return false;
+    }
+
+    return true;
+}
+
+export function getPreviewCells(row, col, length, orientation) {
+    const cells = [];
+
+    for (let i = 0; i < length; i++) {
+        if (orientation === "horizontal") {
+            cells.push({ r: row, c: col + i });
+        } else {
+            cells.push({ r: row + i, c: col });
+        }
+    }
+
+    return cells;
+}
+
+export function resetPlacement() {
+
+}
 
 export function newGame() {
-
     currentTurn = "human";
     gameOver = false;
-    setUpPhase = true;
+    setupPhase = true;
 
     const humanPlayer = new Player('human');
     const computerPlayer = new Player('computer');
@@ -56,3 +109,5 @@ export function newGame() {
     });
     return { humanPlayer, computerPlayer };
 }
+//new game should reset placement and open set up phase
+//rotation doesnt immediately change preview

@@ -18,24 +18,24 @@ export function createGrid(container) {
     }
 }
 
-export function renderBoard(gameboard, container, hideShips = false){
+export function renderBoard(gameboard, container, hideShips = false) {
     container.innerHTML = "";
 
-    for(let r = 0;r<10;r++){
-        for(let c = 0;c<10;c++){
-            const cell = createElement("div","cell");
+    for (let r = 0; r < 10; r++) {
+        for (let c = 0; c < 10; c++) {
+            const cell = createElement("div", "cell");
             cell.dataset.row = r;
             cell.dataset.col = c;
 
             const primary = gameboard.primaryGrid[r][c];
             const tracking = gameboard.trackingGrid[r][c];
 
-            if(tracking === 'hit'){
+            if (tracking === 'hit') {
                 cell.classList.add('hit');
             }
-            else if(tracking === 'miss'){
+            else if (tracking === 'miss') {
                 cell.classList.add('miss');
-            } else if(primary!==null && !hideShips){
+            } else if (primary !== null && !hideShips) {
                 cell.classList.add('ship');
             }
             container.appendChild(cell);
@@ -43,7 +43,41 @@ export function renderBoard(gameboard, container, hideShips = false){
     }
 }
 
-export let gameFlowBtn = document.querySelector(".btn button");
-export let placeShipDialog = document.querySelector("dialog");
+export const newGameBtn = document.querySelector(".btn button");
+export const placeShipDialog = document.querySelector("dialog");
+export const beginBattleBtn = document.querySelector(".begin-battle");
+export const resetPlacementBtn = document.querySelector(".reset-placement");
 
+export function highlightShipSelection(ship, allShips) {
+    ship.classList.toggle('selected');
+    allShips.forEach(other => {
+        if (other !== ship) {
+            other.classList.remove('selected');
+        }
+    });
+}
 
+export function clearPreview(grid) {
+    grid.querySelectorAll(".preview-valid, .preview-invalid")
+        .forEach(cell => {
+            cell.classList.remove("preview-valid", "preview-invalid");
+        });
+}
+
+export function showPreviewCells(grid, cells, valid) {
+    cells.forEach(({ r, c }) => {
+        const cell = grid.querySelector(`[data-row="${r}"][data-col="${c}"]`);
+        if (!cell) return;
+
+        cell.classList.add(valid ? "preview-valid" : "preview-invalid");
+    });
+}
+
+export function markPlacedShip() {
+
+}
+export function disableShipIcon() {
+
+}
+
+export const shipImages = document.querySelectorAll('dialog img');
