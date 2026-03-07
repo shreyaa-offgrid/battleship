@@ -1,20 +1,25 @@
 import "./styles.css";
+
 import {
     newGame, getCurrentTurn, switchTurn, isGameOver,
     setGameOver, resetPlacement, finishSetup, selectShip,
     isSetupPhase, rotateShip, getSelectedShip, getOrientation,
-    isPlacementValid, getPreviewCells, unselectShip,
+    isPlacementValid, getPreviewCells, deselectShip,
     shipPlaced, getShipsRemaining, computerAttack
 } from "./gameController.js";
+
 import {
     beginBattleBtn, highlightShipSelection, newGameBtn,
     placeShipDialog, renderBoard, resetPlacementBtn, shipImages,
-    clearPreview, showPreviewCells
+    clearPreview, showPreviewCells, removeHighlightShip,
+    enableElement, disableElement, resetShips,
+    showTurn,
+    hideTurn
 } from "./dom.js";
+
 import { Ship } from "./logic/ship.js";
 
 document.addEventListener("DOMContentLoaded", () => {
-
     let humanPlayer;
     let computerPlayer;
 
@@ -70,6 +75,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     computerGrid.addEventListener('click', (e) => {
+
         if (!e.target.classList.contains('cell')) return;
         if (isGameOver()) return;
 
@@ -80,30 +86,40 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     newGameBtn.addEventListener('click', () => {
+
         startGame();
         resetPlacement();
+        resetShips();
+        disableElement(beginBattleBtn);
         placeShipDialog.show();
         newGameBtn.style.display = 'none';
+        hideTurn();
     });
 
     beginBattleBtn.addEventListener('click', () => {
+
         placeShipDialog.close();
         newGameBtn.style.display = 'block';
+        showTurn();
         finishSetup();
     });
 
     resetPlacementBtn.addEventListener('click', () => {
+
         resetPlacement();
+        resetShips();
         humanPlayer.gameboard.primaryGrid = Array.from({ length: 10 }, () => Array(10).fill(null));
         humanPlayer.gameboard.trackingGrid = Array.from({ length: 10 }, () => Array(10).fill(null));
-        computerPlayer.gameboard.trackingGrid = Array.from({ length: 10 }, () => Array(10).fill(null));
         humanPlayer.gameboard.fleet.clear();
         renderBoard(humanPlayer.gameboard, playerGrid);
+
+        computerPlayer.gameboard.trackingGrid = Array.from({ length: 10 }, () => Array(10).fill(null));
         renderBoard(computerPlayer.gameboard, computerGrid, true);
     });
 
 
     shipImages.forEach(ship => {
+
         ship.addEventListener('click', () => {
             selectShip(ship);
             highlightShipSelection(ship, shipImages);
@@ -129,6 +145,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     if (isSetupPhase()) {
+
         document.addEventListener('keydown', (e) => {
             if (e.key.toLowerCase() === 'r') rotateShip();
             if (lastHoverRow !== null && lastHoverCol !== null) {
@@ -138,6 +155,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     playerGrid.addEventListener("mousemove", (e) => {
+
         if (!e.target.classList.contains("cell")) return;
 
         const row = Number(e.target.dataset.row);
@@ -149,6 +167,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     playerGrid.addEventListener("click", (e) => {
+
         if (!e.target.classList.contains("cell")) return;
 
         const row = Number(e.target.dataset.row);
@@ -161,17 +180,20 @@ document.addEventListener("DOMContentLoaded", () => {
 
         let valid = humanPlayer.gameboard.placeShip(newShip, row, col);
         if (!valid) return;
-        renderBoard(humanPlayer.gameboard, playerGrid);
 
+        renderBoard(humanPlayer.gameboard, playerGrid);
         shipPlaced();
+
         if (getShipsRemaining() === 0) {
-            beginBattleBtn.classList.remove('disabled');
+            enableElement(beginBattleBtn);
         }
 
-        unselectShip(ship);
+        removeHighlightShip(getSelectedShip());
+        deselectShip();
     });
 
     playerGrid.addEventListener("mouseleave", () => {
+
         clearPreview(playerGrid);
     });
 });

@@ -1,4 +1,3 @@
-import { beginBattleBtn, disableElement, shipImages } from "./dom.js";
 import { Player } from "./logic/player.js";
 import { Ship } from "./logic/ship.js";
 
@@ -14,6 +13,11 @@ let targetQueue = [];
 
 export function switchTurn() {
     currentTurn = currentTurn === 'human' ? 'computer' : 'human';
+    const turnIndicator = document.querySelector(".turn-indicator>p");
+    turnIndicator.textContent =
+        currentTurn === "human"
+            ? "Your Turn"
+            : "Computer Thinking...";
 }
 
 export function getCurrentTurn() {
@@ -23,7 +27,6 @@ export function getCurrentTurn() {
 export function isGameOver() {
     return gameOver;
 }
-
 export function setGameOver() {
     gameOver = true;
 }
@@ -37,7 +40,6 @@ export const shipsToPlace = [{ len: 5, type: 'carrier' },
 export function isSetupPhase() {
     return setupPhase;
 }
-
 export function finishSetup() {
     setupPhase = false;
 }
@@ -47,6 +49,9 @@ export function selectShip(ship) {
     let idx = shipsToPlace.findIndex((s) => s.type === typeClass);
     selectedShip = shipsToPlace[idx];
 }
+export function deselectShip() {
+    selectedShip = null;
+}
 
 export function rotateShip() {
     currentOrientation = currentOrientation === 'horizontal' ? 'vertical' : 'horizontal';
@@ -54,16 +59,6 @@ export function rotateShip() {
 
 export function getSelectedShip() {
     return selectedShip;
-}
-
-export function unselectShip() {
-
-    let type = selectedShip.type;
-    shipImages.forEach(ship => {
-        ship.classList.remove('selected');
-        if (ship.parentNode.classList.contains(type)) disableElement(ship);
-    });
-    selectedShip = null;
 }
 
 export function getOrientation() {
@@ -103,10 +98,6 @@ export function resetPlacement() {
     selectedShip = null;
     shipsRemaining = shipsToPlace.length;
     currentOrientation = "horizontal";
-    shipImages.forEach(ship => {
-        ship.classList.remove('disabled');
-        ship.classList.remove('selected');
-    })
 }
 
 export function shipPlaced() {
@@ -170,7 +161,6 @@ export function newGame() {
     currentTurn = "human";
     gameOver = false;
     setupPhase = true;
-    disableElement(beginBattleBtn);
     targetQueue = [];
 
     const humanPlayer = new Player('human');

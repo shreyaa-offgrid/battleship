@@ -51,6 +51,20 @@ h1 {
   font-weight: bold;
 }
 
+.human-container,
+.computer-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3em;
+}
+
+.computer-container .cell:hover{
+  background-color: white;
+  cursor:pointer;
+  opacity: 80%;
+}
+
 .grid-container {
   padding: 0.5em;
   border: 1px green solid;
@@ -89,15 +103,18 @@ h1 {
   margin-top: 2em;
 }
 
-.btn button:hover, dialog button:hover {
+.btn button:hover,
+dialog button:hover {
   transform: scale(1.02);
 }
 
-.btn button:active, dialog button:active{
+.btn button:active,
+dialog button:active {
   background-color: darkgreen;
 }
 
-.btn button, dialog button {
+.btn button,
+dialog button {
   font-family: Michroma;
   text-align: center;
   padding: 0.5em;
@@ -126,7 +143,7 @@ footer a {
   cursor: pointer;
 }
 
-dialog{
+dialog {
   position: absolute;
   top: 5em;
   right: 2em;
@@ -139,54 +156,55 @@ dialog{
   background-color: azure;
 }
 
-dialog .flex-container{
+dialog .flex-container {
   display: flex;
   flex-direction: column;
   gap: 0.3em;
 }
 
-dialog *{
+dialog * {
   font-family: Michroma;
 }
 
-dialog button{
+dialog button {
   width: 20vw;
 }
 
-dialog .ship{
+dialog .ship {
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
-dialog img{
+dialog img {
   height: 3.5em;
   border: 1px green dashed;
   border-radius: 1em;
   cursor: pointer;
 }
 
-dialog img:hover{
+dialog img:hover {
   transform: scale(1.02);
 }
 
-dialog .carrier>img{
+dialog .carrier>img {
   width: 12.5em;
 }
 
-dialog .battleship>img{
+dialog .battleship>img {
   width: 10em;
 }
 
-dialog .submarine>img, dialog .destroyer>img{
+dialog .submarine>img,
+dialog .destroyer>img {
   width: 7.5em;
 }
 
-dialog .patrol-boat>img{
+dialog .patrol-boat>img {
   width: 5em;
 }
 
-dialog .btns{
+dialog .btns {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -194,24 +212,48 @@ dialog .btns{
   margin-top: 1em;
 }
 
-dialog p{
+dialog p {
   margin-top: 2em;
 }
 
-dialog img.selected{
+dialog img.selected {
   border: 2px darkgreen solid;
   background-color: white;
 }
 
 .preview-valid {
-    background: rgba(0, 255, 0, 0.35);
+  background: rgba(0, 255, 0, 0.35);
 }
 
 .preview-invalid {
-    background: rgba(255, 0, 0, 0.35);
+  background: rgba(255, 0, 0, 0.35);
 }
 
-.disabled{
+.disabled {
   opacity: 50%;
   pointer-events: none;
+}
+
+.sunk {
+  background: maroon;
+}
+
+.turn-indicator {
+  font-family: Michroma;
+  font-size: 1.2em;
+  margin-top: 1em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.turn-indicator>p {
+  background-color: azure;
+  /* width: 20vw; */
+  text-align: center;
+  border-radius: 1em;
+  padding: 0.3em;
+  padding-left: 1em;
+  padding-right: 1em;
+  color: navy;
 }
