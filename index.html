@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en-US">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Battleship Game</title>
+    <link rel="icon" href="34254acfe9353e14453b.png">
+<script defer src="main.js"></script></head>
+
+<body>
+    <header>
+        <h1>B A T T L E S H I P</h1>
+    </header>
+    <main>
+        <div class="boards">
+            <div class="human-container">
+                <div class="grid-container">
+                    <div class="ocean-grid"></div>
+                    <p>Player Ocean</p>
+                </div>
+            </div>
+            <div class="computer-container">
+                <div class="grid-container">
+                    <div class="ocean-grid"></div>
+                    <p>Computer Ocean</p>
+                </div>
+            </div>
+        </div>
+        <div class="btn">
+            <button class="new-game">New Game?</button>
+        </div>
+        <div class="turn-indicator">
+            <p hidden>Your Turn</p>
+        </div>
+    </main>
+    <footer>
+        <p>Background photo by <a
+                href="https://unsplash.com/@thomascpark?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Thomas
+                Park</a> on
+            <a
+                href="https://unsplash.com/photos/gray-battleship-on-body-of-water-during-daytime-C57lmA3a5zY?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
+        </p>
+        <p>Battleship icon created on <a href="https://www.flaticon.com/free-icons/battleship">smalllikeart -
+                Flaticon</a>
+        </p>
+    </footer>
+    <dialog>
+        <div class="flex-container">
+            <div class="ship carrier">
+                <p>Carrier (5 cells)</p>
+                <img src="34254acfe9353e14453b.png" alt="">
+            </div>
+            <div class="ship battleship">
+                <p>Battleship (4 cells)</p>
+                <img src="34254acfe9353e14453b.png" alt="">
+            </div>
+            <div class="ship submarine">
+                <p>Submarine (3 cells)</p>
+                <img src="34254acfe9353e14453b.png" alt="">
+            </div>
+            <div class="ship destroyer">
+                <p>Destroyer (3 cells)</p>
+                <img src="34254acfe9353e14453b.png" alt="">
+            </div>
+            <div class="ship patrol-boat">
+                <p>Patrol Boat (2 cells)</p>
+                <img src="34254acfe9353e14453b.png" alt="">
+            </div>
+            <div class="btns">
+                <button class="reset-placement">Reset placement?</button>
+                <button class="begin-battle">Begin battle!</button>
+            </div>
+            <p>* Press R to rotate ship 
+                <br> * Click on a ship to select it 
+                <br> * Hover over ocean, click on cell to place selected ship
+            </p>
+        </div>
+    </dialog>
+</body>
+
+</html>
